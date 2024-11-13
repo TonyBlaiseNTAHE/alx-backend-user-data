@@ -15,12 +15,17 @@ def status() -> str:
 
 
 @app_views.route('/unauthorized', methods=['GET'], strict_slashes=False)
-def abort() -> str:
-    """ GET /api/v1/unauthorized
-    Return:
-      - the status of the API
+def not_authorized() -> str:
+    """ Not authorized handler
     """
-    return jsonify({"error": "Unauthorized"})
+    abort(401)
+
+
+@app_views.route('/forbidden', methods=['GET'], strict_slashes=False)
+def forbidden() -> str:
+    """ Not allowed handler
+    """
+    abort(403)
 
 
 @app_views.route('/stats/', strict_slashes=False)
