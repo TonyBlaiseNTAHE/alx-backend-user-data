@@ -5,6 +5,7 @@ Auth class
 from typing import List, TypeVar
 from flask import request
 from models.user import User
+import fnmatch
 
 
 class Auth():
@@ -16,6 +17,10 @@ class Auth():
         """
         if path is None:
             return True
+
+        for p in excluded_paths:
+            if fnmatch.fnmatch(path, p):
+                return False
 
         if path[-1] != '/':
             path += '/'
