@@ -23,22 +23,22 @@ if auth_type:
 
 @app.before_request
 def before_request_func():
-    # If no `auth` instance is set, do nothing
+    """If no `auth` instance is set, do nothing
+    """
     if auth is None:
         return
-    
-    # List of paths that don't require authentication
+
     excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
 
-    # Check if the request path requires authentication
+
     if not auth.require_auth(request.path, excluded_paths):
         return
 
-    # If no Authorization header is present, abort with 401 error
+
     if auth.authorization_header(request) is None:
         abort(401)
 
-    # If the user is not valid (current_user returns None), abort with 403 error
+
     if auth.current_user(request) is None:
         abort(403)
 
