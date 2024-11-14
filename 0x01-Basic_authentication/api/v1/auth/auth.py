@@ -4,7 +4,6 @@ Auth class
 """
 from typing import List, TypeVar
 from flask import request
-from models.user import User
 import fnmatch
 
 
@@ -41,9 +40,14 @@ class Auth():
         return False
 
     def authorization_header(self, request=None) -> str:
-        """ method
+        """ auth_header
         """
-        return None
+        if request is None:
+            return None
+
+        if request.headers.get('Authorization') is None:
+            return None
+        return request.headers.get('Authorization')
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
