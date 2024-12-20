@@ -1,55 +1,27 @@
 #!/usr/bin/env python3
-"""
-Auth class
-"""
+"""doc doc doc """
 from typing import List, TypeVar
 from flask import request
-import fnmatch
 
 
-class Auth():
-    """
-    Auth class
-    """
+class Auth:
+    """doc doc doc"""
+
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """ require_auth
-        """
-        if path is None:
+        """doc doc doc"""
+        if path is None or excluded_paths is None or len(excluded_paths) == 0:
             return True
+        if path[-1] != "/":
+            path += "/"
 
-        for p in excluded_paths:
-            if fnmatch.fnmatch(path, p):
-                return False
-
-        if path[-1] != '/':
-            path += '/'
-
-        for excluded_path in excluded_paths:
-            if excluded_path[-1] != '/' or excluded_path[-1] != '*':
-                excluded_path += '/'
-
-        if excluded_paths is None:
-            return True
-
-        if excluded_paths == []:
-            return True
-
-        if path not in excluded_paths:
-            return True
-
-        return False
+        return path not in excluded_paths
 
     def authorization_header(self, request=None) -> str:
-        """ auth_header
-        """
+        """doc doc doc"""
         if request is None:
             return None
+        return request.headers.get("Authorization", None)
 
-        if request.headers.get('Authorization') is None:
-            return None
-        return request.headers.get('Authorization')
-
-    def current_user(self, request=None) -> TypeVar('User'):
-        """
-        """
+    def current_user(self, request=None) -> TypeVar("User"):
+        """doc doc doc"""
         return None
